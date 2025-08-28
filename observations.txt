@@ -1,0 +1,17 @@
+Experiment 1 (8/27/2025)
+100 players
+100 generations
+50 best players selected to form next generation
+changing 100 out of 1375 instructions each generation
+
+Observations:
+Over time, all 100 players start to go in the same patteern
+Doesn't seem to be improving
+Perhaps the jumps need to be too precise for this type of algorithm
+Also, an instruction array of 0 and 1s might not work because the block is basically continuously jumping
+
+Questions:
+How does the algorithm get worse, because the top 50 should stay so the best score of the previous round should only be imporved upon or stay the same in the next round
+
+Improvements:
+Make it such that its not the top 50% go on to the next round but instead something like top 25%

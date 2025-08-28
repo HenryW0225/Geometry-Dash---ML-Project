@@ -1,4 +1,4 @@
-import pygame
+"""import pygame
 from block import Block
 from level import Level
 
@@ -90,8 +90,7 @@ level = createLevel()
 player = Block(450, GAME_FLOOR, 50)
 
 
-
-"""while running:
+while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -135,7 +134,7 @@ player = Block(450, GAME_FLOOR, 50)
     pygame.display.flip()
     clock.tick(60)  
 
-pygame.quit()"""
+pygame.quit() """
 
 
 

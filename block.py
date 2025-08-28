@@ -13,7 +13,8 @@ class Block:
             self.vertical_velocity = self.jump
             self.grounded = False
             
-    def update(self, floor) :
+    def update(self, floor, FRAME_UNIT) :
+        self.world_x += FRAME_UNIT
         self.world_y += self.vertical_velocity
         if (self.world_y + self.size/2 >= floor) :
             self.vertical_velocity = 0
@@ -21,7 +22,6 @@ class Block:
             self.grounded = True
         else :
             self.vertical_velocity += self.gravity
-    
     
     def coordinates(self) :
         return [self.world_x, self.world_y, self.size]

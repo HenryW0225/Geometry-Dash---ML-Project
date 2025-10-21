@@ -3,6 +3,7 @@ Experiment 1 (8/27/2025)
 100 generations
 50 best players selected to form next generation
 changing 100 out of 1375 instructions each generation
+instructions for each player was an array of 0s and 1s for each frame where each 1 meant jump
 
 Observations:
 Over time, all 100 players start to go in the same patteern
@@ -15,3 +16,8 @@ How does the algorithm get worse, because the top 50 should stay so the best sco
 
 Improvements:
 Make it such that its not the top 50% go on to the next round but instead something like top 25%
+Perhaps make the instructions times for the jumps 
+
+
+Experiment 2 
+Using NEAT - CodeBullet wooooo

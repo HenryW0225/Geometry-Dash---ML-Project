@@ -1,66 +1,68 @@
-class Spike :
-    def __init__(self, world_x, world_y, height = 50, width = 50) :
-        self.world_x = world_x
-        self.world_y = world_y
+class Spike:
+    def __init__(self, worldX, worldY, height=50, width=50):
+        self.worldX = worldX
+        self.worldY = worldY
         self.height = height
         self.width = width
     
-    def is_colliding(self, block_x, block_y, block_size):
-        bottom_left  = (block_x - block_size//2, block_y + block_size//2)
-        bottom_right = (block_x + block_size//2, block_y + block_size//2)
+    def isColliding(self, blockX, blockY, blockSize): 
+        bottomLeft  = (blockX - blockSize // 2, blockY + blockSize // 2)
+        bottomRight = (blockX + blockSize // 2, blockY + blockSize // 2)
 
-        top    = (self.world_x, self.world_y - self.height)
-        left   = (self.world_x - self.width // 2, self.world_y)
-        right  = (self.world_x + self.width // 2, self.world_y)
+        top    = (self.worldX, self.worldY - self.height)
+        left   = (self.worldX - self.width // 2, self.worldY)
+        right  = (self.worldX + self.width // 2, self.worldY)
 
-        def ccw(a, b, c): return (c[1]-a[1])*(b[0]-a[0]) >= (b[1]-a[1])*(c[0]-a[0])
+        def ccw(a, b, c): 
+            return (c[1] - a[1]) * (b[0] - a[0]) >= (b[1] - a[1]) * (c[0] - a[0])
+        
         def intersect(p1, p2, q1, q2):
-            return ccw(p1,q1,q2) != ccw(p2,q1,q2) and ccw(p1,p2,q1) != ccw(p1,p2,q2)
+            return ccw(p1, q1, q2) != ccw(p2, q1, q2) and ccw(p1, p2, q1) != ccw(p1, p2, q2)
 
-        if intersect(bottom_left, bottom_right, left, top): return True
-        if intersect(bottom_left, bottom_right, right, top): return True
+        if intersect(bottomLeft, bottomRight, left, top): 
+            return True
+        if intersect(bottomLeft, bottomRight, right, top): 
+            return True
 
         return False
     
-    def visible(self, screen_world_x, screen_width) :
-        if (self.world_x + self.width//2 >= screen_world_x or self.world_x <= screen_world_x + screen_width) :    
-            return [self.world_x, self.world_y, self.height, self.width]
+    def visible(self, screenWorldX, SCREEN_WIDTH):
+        if (self.worldX + self.width // 2 >= screenWorldX or self.worldX <= screenWorldX + SCREEN_WIDTH):    
+            return [self.worldX, self.worldY, self.height, self.width]
         return None
     
 
-class Level :
-    def __init__(self) :
+class Level:
+    def __init__(self):
         self.spikes = []
     
-    def add_spike(self, world_x, floor, height = 50, width = 50) :
-        newSpike = Spike(world_x, floor, height, width) 
+    def addSpike(self, worldX, floor, height=50, width=50):
+        newSpike = Spike(worldX, floor, height, width) 
         self.spikes.append(newSpike)
     
-    def floor(self) :
+    def floor(self):
         return self.floor
     
-    def update_spikes(self, screen_world_x, SCREEN_WIDTH,) :
-        spike_coordinates = []
-        for spike in self.spikes :
-            coordinates = spike.visible(screen_world_x, SCREEN_WIDTH) 
-            if (coordinates != None) :
-                coordinates[0] -= screen_world_x
-                spike_coordinates.append(coordinates)
-        return spike_coordinates
+    def updateSpikes(self, screenWorldX, SCREEN_WIDTH):
+        spikeCoordinates = []
+        for spike in self.spikes:
+            coordinates = spike.visible(screenWorldX, SCREEN_WIDTH) 
+            if coordinates is not None:
+                coordinates[0] -= screenWorldX
+                spikeCoordinates.append(coordinates)
+        return spikeCoordinates
     
-    def possible_collision(self, players_world_x, players_size) :
-        possible_collisions = []
-        for spike in self.spikes :
-            if (spike.world_x + spike.width//2 >= players_world_x - players_size//2 and spike.world_x - spike.width//2 <= players_world_x + players_size//2) :
-                possible_collisions.append(spike)
+    def possibleCollision(self, playerWorldX, playerSize):
+        possibleCollisions = []
+        for spike in self.spikes:
+            if (spike.worldX + spike.width // 2 >= playerWorldX - playerSize // 2 
+                and spike.worldX - spike.width // 2 <= playerWorldX + playerSize // 2):
+                possibleCollisions.append(spike)
         
-        return possible_collisions
+        return possibleCollisions
             
-    def is_colliding(self, possible_collisions, player) :
-        for spike in possible_collisions :
-            if (spike.is_colliding(player.world_x, player.world_y, player.size)) :
+    def isColliding(self, possibleCollisions, player):
+        for spike in possibleCollisions:
+            if spike.isColliding(player.worldX, player.worldY, player.size):
                 return True
         return False
-                
-            
-        
